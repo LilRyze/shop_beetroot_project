@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Good;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Category;
+use App\User;
 use App\Order;
 use App\Goods_Order;
 
@@ -164,6 +166,97 @@ class AdminController extends Controller
         try {
             $orders = Order::all();
             return view('show_orders', ['orders' => $orders]);
+        } catch (\Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function deleteOrder(Request $request)
+    {
+        try {
+            Order::where('id', $request->id)->delete();
+            Goods_Order::where('order_id', $request->id)->delete();
+            echo 'Order was deleted';
+            sleep(5);
+            return redirect('/admin');
+        } catch (\Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function editOrder(Request $request)
+    {
+        try {
+            $price = Good::where('id', $request->goods_id)->first()->price;
+            Goods_Order::where('order_id', $request->order_id_to_change)->where('goods_id', $request->goods_id_to_change)->update([
+                'amount' => $price,
+                'goods_id' => $request->goods_id,
+            ]);
+            Order::where('id', $request->order_id_to_change)->update([
+                'customer_name' => $request->customer_name,
+                'city' => $request->city,
+                'phone' => $request->phone,
+                'comment' => $request->comment,
+            ]);
+            echo 'Order updated';
+            sleep(5);
+            return redirect('/admin');
+        } catch (\Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function createUser(Request $request)
+    {
+        try {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+            ]);
+            echo 'User created';
+            sleep(5);
+            return redirect('/admin');
+        } catch (\Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function showUsers()
+    {
+        try {
+            $users = User::all();
+            return view('show_users', ['users' => $users]);
+        } catch (\Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function deleteUser(Request $request)
+    {
+        try {
+            User::where('id', $request->id)->delete();
+            echo 'User was deleted';
+            sleep(5);
+            return redirect('/admin');
+        } catch (\Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function editUser(Request $request)
+    {
+        try {
+            User::where('id', $request->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+                ]);
+            echo 'User updated';
+            sleep(5);
+            return redirect('/admin');
         } catch (\Exception $e) {
             echo $e;
         }

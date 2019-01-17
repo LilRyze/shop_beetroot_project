@@ -68,11 +68,14 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
+                        <a href="{{url('/shop')}}">Shop</a>
                         <a href="{{ url('/home') }}">Home</a>
-                        @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasRole('admin'))
                             <a href="{{url('/admin')}}">Admin Panel</a>
-                            @endif
+                        @endif
                     @else
+                        <a href="{{url('/shop')}}">Shop</a>
+
                         <a href="{{ route('login') }}">Login</a>
 
                         @if (Route::has('register'))
@@ -84,17 +87,16 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Shop
                 </div>
 
                 <div class="links">
-                    @auth
+                    <a href="{{url('/shop')}}">Shop</a>
+                @auth
                     @if (auth()->user()->hasRole('admin'))
-                    <a href="/admin">Admin Panel</a>
-                        @else
-                        <a href="/shop">Shop</a>
-                        @endauth
-                    @endif
+                            <a href="/admin">Admin Panel</a>
+                        @endif
+                    @endauth
                 </div>
             </div>
         </div>

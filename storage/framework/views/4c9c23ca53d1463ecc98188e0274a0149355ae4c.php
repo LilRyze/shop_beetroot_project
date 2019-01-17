@@ -68,11 +68,14 @@
             <?php if(Route::has('login')): ?>
                 <div class="top-right links">
                     <?php if(auth()->guard()->check()): ?>
+                        <a href="<?php echo e(url('/shop')); ?>">Shop</a>
                         <a href="<?php echo e(url('/home')); ?>">Home</a>
-                        <?php if(auth()->user()->hasRole('admin')): ?>
+                    <?php if(auth()->user()->hasRole('admin')): ?>
                             <a href="<?php echo e(url('/admin')); ?>">Admin Panel</a>
-                            <?php endif; ?>
+                        <?php endif; ?>
                     <?php else: ?>
+                        <a href="<?php echo e(url('/shop')); ?>">Shop</a>
+
                         <a href="<?php echo e(route('login')); ?>">Login</a>
 
                         <?php if(Route::has('register')): ?>
@@ -84,15 +87,14 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Shop
                 </div>
 
                 <div class="links">
-                    <?php if(auth()->guard()->check()): ?>
+                    <a href="<?php echo e(url('/shop')); ?>">Shop</a>
+                <?php if(auth()->guard()->check()): ?>
                     <?php if(auth()->user()->hasRole('admin')): ?>
-                    <a href="/admin">Admin Panel</a>
-                        <?php else: ?>
-                        <a href="/shop">Shop</a>
+                            <a href="/admin">Admin Panel</a>
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>

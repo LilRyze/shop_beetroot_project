@@ -61,3 +61,32 @@ Route::get('/action_orders/create_order', function () {
 })->middleware('role:admin');
 Route::post('/action_orders/create_order', ['uses' => 'AdminController@createOrder'])->middleware('role:admin');
 Route::get('/action_orders/show_orders', ['uses' => 'AdminController@showOrders'])->middleware('role:admin');
+
+Route::get('/action_orders/delete_order', function () {
+    return view('delete_order');
+})->middleware('role:admin');
+Route::post('/action_orders/delete_order', ['uses' => 'AdminController@deleteOrder'])->middleware('role:admin');
+
+
+Route::get('/action_orders/edit_order', function () {
+    return view('edit_order');
+})->middleware('role:admin');
+Route::post('/action_orders/edit_order', ['uses' => 'AdminController@editOrder'])->middleware('role:admin');
+
+Route::get('/action_users/create_user', function () {
+    return view('create_user');
+})->middleware('role:admin');
+Route::post('/action_users/create_user', ['uses' => 'AdminController@createUser'])->middleware('role:admin');
+
+
+Route::get('/action_users/show_users', ['uses' => 'AdminController@showUsers'])->middleware('role:admin');
+
+Route::get('/action_users/delete_user', function () {
+    return view('delete_user');
+})->middleware('role:admin');
+Route::post('/action_users/delete_user', ['uses' => 'AdminController@deleteUser'])->middleware('role:admin');
+
+Route::get('/action_users/edit_user', function () {
+    return view('edit_user');
+})->middleware('role:admin');
+Route::post('/action_users/edit_user', ['uses' => 'AdminController@editUser'])->middleware('role:admin');
